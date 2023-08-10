@@ -35,7 +35,7 @@ function validateInput(testInput) {
     return "Empty";
   } else if (isNaN(number)) {
     return "Not a Number";
-  } else if (isNaN(number) === false)  {
+  } else if (isNaN(number) === false) {
     return "Is a Number";
   }
 }
@@ -49,11 +49,14 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
   if (
     validateInput(pilot) === "Is a Number" ||
-    validateInput(copilot) === "Is a Number" ||
+    validateInput(copilot) === "Is a Number"
+  ) {
+    alert("Input needs to be a name!");
+  } else if (
     validateInput(fuelLevel) === "Not a Number" ||
     validateInput(cargoLevel) === "Not a Number"
   ) {
-    alert("Invalid input!");
+    alert("Input needs to be a number!");
   } else if (
     validateInput(pilot) === "Empty" ||
     validateInput(copilot) === "Empty" ||
