@@ -37,6 +37,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     const copilotStatus = document.getElementById("copilotStatus");
     const fuelStatus = document.getElementById("fuelStatus");
     const cargoStatus = document.getElementById("cargoStatus");
+    const launchStatus = document.getElementById("launchStatus");
     
     if ((validateInput(pilot) === 'Is a Number') || (validateInput(copilot) === 'Is a Number') || (validateInput(fuelLevel) === 'Not a Number') || (validateInput(cargoLevel) === 'Not a Number'))   {
         alert('Invalid input!')
@@ -48,12 +49,30 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     
     if (list.style.visibility === 'visible')    {
         pilotStatus.innerHTML = 
-            `<li id="pilotStatus" data-testid="pilotStatus">${pilot} Ready</li>`;
+            `${pilot} Ready`;
         copilotStatus.innerHTML = 
-            `<li id="copilotStatus" data-testid="copilotStatus">${copilot} Ready</li>`;
-    }
-    
-}
+            `${copilot} Ready`;
+        if (Number(fuelLevel) <= 10000)  {
+            fuelStatus.innerHTML =
+                `Fuel level(L) is NOT high enough for launch`;
+            launchStatus.innerHTML = 
+                `Shuttle NOT Ready for Launch`;
+            launchStatus.style.color = '#C7254E';
+        } else if (Number(cargoLevel) >= 10000) {
+            cargoStatus.innerHTML = 
+                `Cargo mass(kg) is NOT low enough for launch`;
+            launchStatus.innerHTML = 
+                `Shuttle is NOT Ready for Launch`;
+            launchStatus.style.color = '#C7254E';
+        } else {
+            launchStatus.innerHTML =
+                `Shuttle is Ready for Launch`;
+            launchStatus.style.color = '#419F6A';
+        }
+    }   
+}   
+
+
 
 {/* <h2 id="launchStatus" data-testid="launchStatus">Awaiting Information Before Launch</h2>
             <div  id="faultyItems" data-testid="faultyItems">
