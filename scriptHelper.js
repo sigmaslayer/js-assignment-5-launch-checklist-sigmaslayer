@@ -1,6 +1,9 @@
 // Write your helper functions here!
 require('isomorphic-fetch');
 
+const launchForm = document.getElementById("launchForm");
+const formSubmitButton = document.getElementById("formSubmit");
+
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
    /*
@@ -17,21 +20,64 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
 }
 
 function validateInput(testInput) {
-   
+        let number = Number(testInput);
+
+        if (isNaN(number) === false) {
+            return 'Is a Number';
+        }  else if (isNaN(number))  {
+            return 'Not a Number';
+        }  else if (testInput === '')   {
+            return 'Empty';
+        } 
 }
 
+
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-   
+    const pilotStatus = document.getElementById("pilotStatus");
+    const copilotStatus = document.getElementById("copilotStatus");
+    const fuelStatus = document.getElementById("fuelStatus");
+    const cargoStatus = document.getElementById("cargoStatus");
+    
+    if ((validateInput(pilot) === 'Is a Number') || (validateInput(copilot) === 'Is a Number') || (validateInput(fuelLevel) === 'Not a Number') || (validateInput(cargoLevel) === 'Not a Number'))   {
+        alert('Invalid input!')
+    }   else if ((validateInput(pilot) === 'Empty') || (validateInput(copilot) === 'Empty') || (validateInput(fuelLevel) === 'Empty') || (validateInput(cargoLevel) === 'Empty')){
+        alert('All fields are required!')
+    }   else   {
+        list.style.visibility = 'visible';
+    }
+    
+    if (list.style.visibility === 'visible')    {
+        pilotStatus.innerHTML = 
+            `<li id="pilotStatus" data-testid="pilotStatus">${pilot} Ready</li>`;
+        copilotStatus.innerHTML = 
+            `<li id="copilotStatus" data-testid="copilotStatus">${copilot} Ready</li>`;
+    }
+    
 }
+
+{/* <h2 id="launchStatus" data-testid="launchStatus">Awaiting Information Before Launch</h2>
+            <div  id="faultyItems" data-testid="faultyItems">
+                <ol>
+                    <li id="pilotStatus" data-testid="pilotStatus">Pilot Ready</li>
+                    <li id="copilotStatus" data-testid="copilotStatus">Co-pilot Ready</li>
+                    <li id="fuelStatus" data-testid="fuelStatus">Fuel level high enough for launch</li>
+                    <li id="cargoStatus" data-testid="cargoStatus">Cargo mass low enough for launch</li>
+                </ol>
+            </div> */}
+
 
 async function myFetch() {
     let planetsReturned;
 
-    planetsReturned = await fetch().then( function(response) {
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
+            response.json().then( function(data)    {
+                console.log(data);
+            });
         });
 
     return planetsReturned;
 }
+console.log(myFetch());
 
 function pickPlanet(planets) {
 }
